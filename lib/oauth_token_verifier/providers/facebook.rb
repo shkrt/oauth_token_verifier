@@ -18,7 +18,7 @@ module OauthTokenVerifier::Providers
     def check_response(uri)
       response = JSON.parse(Net::HTTP.get(uri))
       if error = response['error']
-        raise OauthTokenVerifier::TokenCheckError, error['message']
+        raise TokenVerifier::TokenCheckError, error['message']
       else
         response
       end
