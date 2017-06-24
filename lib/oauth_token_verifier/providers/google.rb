@@ -1,6 +1,10 @@
 # frozen_string_literal: true
+
 module OauthTokenVerifier::Providers
   class Google
+    BaseFields = Struct.new(:uid, :provider, :info)
+    DataFields = Struct.new(:first_name, :last_name)
+
     def verify_token(context)
       uri = build_uri(context.token)
       response = check_response(uri)
@@ -24,14 +28,13 @@ module OauthTokenVerifier::Providers
       end
     end
 
-    # TODO: use PORO class instead of Ostruct, for performance's sake
     def parse_response(data)
-      OpenStruct.new(
-        uid: data['email'],
-        provider: 'google_oauth2',
-        info: OpenStruct.new(
-          first_name: data['given_name'],
-          last_name: data['family_name']
+      BaseFields.new(
+        data['email'],
+        'google_oauth2',
+        DataFields.new(
+          data['given_name'],
+          data['family_name']
         )
       )
     end

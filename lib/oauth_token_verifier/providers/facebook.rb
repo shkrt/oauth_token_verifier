@@ -1,6 +1,10 @@
 # frozen_string_literal: true
+
 module OauthTokenVerifier::Providers
   class Facebook
+    BaseFields = Struct.new(:uid, :provider, :info)
+    DataFields = Struct.new(:name)
+
     def verify_token(context)
       uri = build_uri(context.token)
       response = check_response(uri)
@@ -24,13 +28,12 @@ module OauthTokenVerifier::Providers
       end
     end
 
-    # TODO: use PORO class instead of Ostruct, for performance's sake
     def parse_response(data)
-      OpenStruct.new(
-        uid: data['id'],
-        provider: 'facebook',
-        info: OpenStruct.new(
-          name: data['name']
+      BaseFields.new(
+        data['id'],
+        'facebook',
+        DataFields.new(
+          data['name']
         )
       )
     end

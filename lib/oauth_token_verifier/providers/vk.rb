@@ -1,6 +1,10 @@
 # frozen_string_literal: true
+
 module OauthTokenVerifier::Providers
   class Vk
+    BaseFields = Struct.new(:uid, :provider, :info)
+    DataFields = Struct.new(:first_name, :last_name)
+
     def verify_token(context)
       uri = build_uri(context.token)
       response = check_response(uri)
@@ -24,12 +28,11 @@ module OauthTokenVerifier::Providers
       end
     end
 
-    # TODO: use PORO class instead of Ostruct, for performance's sake
     def parse_response(data)
-      OpenStruct.new(
+      BaseFields.new(
         uid: data['uid'],
         provider: 'vkontakte',
-        info: OpenStruct.new(
+        info: DataFields.new(
           first_name: data['first_name'],
           last_name: data['last_name']
         )
