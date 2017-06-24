@@ -1,8 +1,8 @@
-require "oauth_token_verifier/version"
-require "oauth_token_verifier/configuration"
-require "oauth_token_verifier/providers/google"
-require "oauth_token_verifier/providers/facebook"
-require "oauth_token_verifier/providers/vk"
+require 'oauth_token_verifier/version'
+require 'oauth_token_verifier/configuration'
+require 'oauth_token_verifier/providers/google'
+require 'oauth_token_verifier/providers/facebook'
+require 'oauth_token_verifier/providers/vk'
 
 module OauthTokenVerifier
   def verify(provider_name, payload)
@@ -53,6 +53,5 @@ module OauthTokenVerifier
 
       "OauthTokenVerifier::Providers::#{name.to_s.camelize}".constantize
     end
-
   end
 end
