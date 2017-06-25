@@ -1,14 +1,32 @@
 # OauthTokenVerifier
 
-TODO: Write usage instructions here
+This library helps to verify oauth2 access tokens, obtained from third party, i.e. mobile application.
 
 ## Installation
 
-TODO: Write usage instructions here
+not released yet...
+
+`gem install oauth_token_verifier`
+
+`gem oauth_token_verifier`
+
+## Configuration
+
+You should configure enabled providers first, only three providers are supported by now
+
+```
+OauthTokenVerifier.configure do
+  config.enabled_providers = [:google, :facebook, :vk]
+end
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+`include OauthTokenVerifier`
+
+`verify(:google, 'qweqweqwLKJNlknlknlk343=')`
+
+The response will either return a struct, containing profile info fields, or raise an exception with error explanation
 
 ## Development
 
