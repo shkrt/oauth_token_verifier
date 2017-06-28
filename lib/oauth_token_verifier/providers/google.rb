@@ -3,7 +3,14 @@
 module OauthTokenVerifier::Providers
   class Google
     BaseFields = Struct.new(:uid, :provider, :info)
-    DataFields = Struct.new(:first_name, :last_name)
+
+    def initialize
+      @data_fields = Struct.new(*config.fields_mapping.keys)
+    end
+
+    def config
+      OauthTokenVerifier.configuration.google
+    end
 
     def verify_token(context)
       uri = build_uri(context.token)
@@ -32,9 +39,8 @@ module OauthTokenVerifier::Providers
       BaseFields.new(
         data['email'],
         'google_oauth2',
-        DataFields.new(
-          data['given_name'],
-          data['family_name']
+        @data_fields.new(
+          *config.fields_mapping.values
         )
       )
     end
