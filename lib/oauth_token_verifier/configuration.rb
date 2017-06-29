@@ -5,9 +5,15 @@ module OauthTokenVerifier
 
     def initialize
       @enabled_providers = []
+
       @google = ProviderSettings.new({
         first_name: 'given_name',
         last_name: 'family_name'
+      })
+
+      @vk = ProviderSettings.new({
+        first_name: 'first_name',
+        last_name: 'last_name'
       })
     end
   end

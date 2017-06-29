@@ -3,7 +3,14 @@
 module OauthTokenVerifier::Providers
   class Vk
     BaseFields = Struct.new(:uid, :provider, :info)
-    DataFields = Struct.new(:first_name, :last_name)
+
+    def initialize
+      @data_fields = Struct.new(*config.fields_mapping.keys)
+    end
+
+    def config
+      OauthTokenVerifier.configuration.vk
+    end
 
     def verify_token(context)
       uri = build_uri(context.token)
@@ -30,11 +37,10 @@ module OauthTokenVerifier::Providers
 
     def parse_response(data)
       BaseFields.new(
-        uid: data['uid'],
-        provider: 'vkontakte',
-        info: DataFields.new(
-          first_name: data['first_name'],
-          last_name: data['last_name']
+        data['uid'],
+        'vkontakte',
+        @data_fields.new(
+          *config.fields_mapping.values
         )
       )
     end
