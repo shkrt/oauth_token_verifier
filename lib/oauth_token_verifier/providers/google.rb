@@ -5,7 +5,7 @@ module OauthTokenVerifier::Providers
     BaseFields = Struct.new(:uid, :provider, :info)
 
     def initialize
-      @data_fields = Struct.new(*config.fields_mapping.keys)
+      @data_fields = Struct.new(*config.fields_mapping.values)
     end
 
     def config
@@ -40,7 +40,7 @@ module OauthTokenVerifier::Providers
         data['email'],
         'google_oauth2',
         @data_fields.new(
-          *config.fields_mapping.values
+          *data.values_at(*config.fields_mapping.keys.map(&:to_s))
         )
       )
     end

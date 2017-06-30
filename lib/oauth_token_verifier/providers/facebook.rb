@@ -3,7 +3,15 @@
 module OauthTokenVerifier::Providers
   class Facebook
     BaseFields = Struct.new(:uid, :provider, :info)
-    DataFields = Struct.new(:name)
+
+    def initialize
+      @data_fields = Struct.new(*config.fields_mapping.values)
+      @request_fields = config.request_fields.join(',')
+    end
+
+    def config
+      OauthTokenVerifier.configuration.facebook
+    end
 
     def verify_token(context)
       uri = build_uri(context.token)
@@ -16,7 +24,9 @@ module OauthTokenVerifier::Providers
     def build_uri(token)
       URI::HTTPS.build(host: 'graph.facebook.com',
                        path: '/me',
-                       query: { access_token: token }.to_query)
+                       query: { access_token: token,
+                                fields: @request_fields
+                              }.to_query)
     end
 
     def check_response(uri)
@@ -32,8 +42,8 @@ module OauthTokenVerifier::Providers
       BaseFields.new(
         data['id'],
         'facebook',
-        DataFields.new(
-          data['name']
+        @data_fields.new(
+          *data.values_at(*config.fields_mapping.keys.map(&:to_s))
         )
       )
     end
