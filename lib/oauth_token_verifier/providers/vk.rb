@@ -5,7 +5,8 @@ module OauthTokenVerifier::Providers
     BaseFields = Struct.new(:uid, :provider, :info)
 
     def initialize
-      @data_fields = Struct.new(*config.fields_mapping.keys)
+      @data_fields = Struct.new(*config.fields_mapping.values)
+      @request_fields = config.request_fields.join(',')
     end
 
     def config
@@ -23,7 +24,9 @@ module OauthTokenVerifier::Providers
     def build_uri(token)
       URI::HTTPS.build(host: 'api.vk.com',
                        path: '/method/users.get',
-                       query: { access_token: token }.to_query)
+                       query: { access_token: token,
+                                fields: @request_fields
+                              }.to_query)
     end
 
     def check_response(uri)
@@ -40,7 +43,7 @@ module OauthTokenVerifier::Providers
         data['uid'],
         'vkontakte',
         @data_fields.new(
-          *config.fields_mapping.values
+          *data.values_at(*config.fields_mapping.keys.map(&:to_s))
         )
       )
     end
