@@ -6,7 +6,7 @@ module OauthTokenVerifier::Providers
 
     def initialize
       @data_fields = Struct.new(*config.fields_mapping.values)
-      @request_fields = config.request_fields.join(',')
+      @request_fields = config.fields_mapping.keys.join(',')
     end
 
     def config
