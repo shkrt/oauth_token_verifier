@@ -40,8 +40,8 @@ module OauthTokenVerifier::Providers
 
     def parse_response(data)
       BaseFields.new(
-        data['uid'],
-        'vkontakte',
+        data[config.id_field],
+        config.name,
         @data_fields.new(
           *data.values_at(*config.fields_mapping.keys.map(&:to_s))
         )
