@@ -9,10 +9,6 @@ module OauthTokenVerifier::Providers
       @request_fields = config.fields_mapping.keys.join(',')
     end
 
-    def config
-      OauthTokenVerifier.configuration.vk
-    end
-
     def verify_token(context)
       uri = build_uri(context.token)
       response = check_response(uri)
@@ -20,6 +16,10 @@ module OauthTokenVerifier::Providers
     end
 
     private
+
+    def config
+      OauthTokenVerifier.configuration.vk
+    end
 
     def build_uri(token)
       URI::HTTPS.build(host: 'api.vk.com',
