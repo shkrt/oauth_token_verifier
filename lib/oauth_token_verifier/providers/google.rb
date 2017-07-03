@@ -8,10 +8,6 @@ module OauthTokenVerifier::Providers
       @data_fields = Struct.new(*config.fields_mapping.values)
     end
 
-    def config
-      OauthTokenVerifier.configuration.google
-    end
-
     def verify_token(context)
       uri = build_uri(context.token)
       response = check_response(uri)
@@ -19,6 +15,10 @@ module OauthTokenVerifier::Providers
     end
 
     private
+
+    def config
+      OauthTokenVerifier.configuration.google
+    end
 
     def build_uri(token)
       URI::HTTPS.build(host: 'www.googleapis.com',
