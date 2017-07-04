@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['zxcgpppmnn@gmail.com']
 
   spec.summary       = 'Oauth2 token verification'
-  spec.description   = 'This library provides possibility of verifying oauth2 access tokens, obtained from third party'
+  spec.description   = 'This library provides possibility of verifying oauth2 access tokens obtained from third party'
   spec.homepage      = "https://github.com/Shkrt/oauth_token_verifier"
   spec.license       = 'MIT'
 
