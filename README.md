@@ -4,9 +4,13 @@ This library helps to verify oauth2 access tokens that have been obtained from t
 
 ## Installation
 
+install manually:
+
 `gem install oauth_token_verifier`
 
-`gem oauth_token_verifier`
+or using Gemfile:
+
+`gem 'oauth_token_verifier'`
 
 ## Configuration
 
