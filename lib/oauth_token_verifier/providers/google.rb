@@ -21,9 +21,10 @@ module OauthTokenVerifier::Providers
     end
 
     def build_uri(token)
+      params = { id_token: token }
       URI::HTTPS.build(host: 'www.googleapis.com',
                        path: '/oauth2/v3/tokeninfo',
-                       query: { id_token: token }.to_query)
+                       query: URI.encode_www_form(params))
     end
 
     def check_response(uri)

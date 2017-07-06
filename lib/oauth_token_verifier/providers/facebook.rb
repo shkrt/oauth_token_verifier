@@ -22,11 +22,10 @@ module OauthTokenVerifier::Providers
     end
 
     def build_uri(token)
+      params = { access_token: token, fields: @request_fields }
       URI::HTTPS.build(host: 'graph.facebook.com',
                        path: '/me',
-                       query: { access_token: token,
-                                fields: @request_fields
-                              }.to_query)
+                       query: URI.encode_www_form(params))
     end
 
     def check_response(uri)
