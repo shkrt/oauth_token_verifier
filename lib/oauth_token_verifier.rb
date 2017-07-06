@@ -52,7 +52,7 @@ module OauthTokenVerifier
         raise NoProviderFoundError, "Oauth provider #{name} is not enabled in configuration"
       end
 
-      "OauthTokenVerifier::Providers::#{name.to_s.camelize}".constantize
+      Object.const_get("OauthTokenVerifier::Providers::#{name.to_s.capitalize}")
     end
   end
 end
