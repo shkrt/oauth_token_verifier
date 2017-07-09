@@ -1,3 +1,5 @@
+include ::OauthTokenVerifier
+
 module OauthTokenVerifier
   RSpec.shared_context "oauth_provider_client" do |provider|
     before do
@@ -5,17 +7,12 @@ module OauthTokenVerifier
         config.enabled_providers = [:vk, :facebook, :google]
       end
 
-      stub_vk_request
-      stub_vk_request_with_incorrect_token
-      stub_fb_request
-      stub_fb_request_with_incorrect_token
-      stub_google_request
-      stub_google_request_with_incorrect_token
+      stub_api_requests
     end
 
     context "with correct access token" do
       it "returns Struct containing user data" do
-        response = TokenVerifier.new(provider, 'correct_token').verify_token
+        response = verify(provider, token: 'correct_token')
         expect(response).to respond_to(:uid)
         expect(response).to respond_to(:info)
         expect(response).to respond_to(:provider)
@@ -24,8 +21,8 @@ module OauthTokenVerifier
 
     context "with incorrect access token" do
       it "returns error message" do
-        response = TokenVerifier.new(provider, 'incorrect_token').verify_token
-        expect(response).to respond_to(:uid)
+        expect{ verify(provider, token: 'incorrect_token') }
+          .to raise_error(OauthTokenVerifier::TokenVerifier::TokenCheckError)
       end
     end
   end
