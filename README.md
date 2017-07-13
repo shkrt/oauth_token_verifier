@@ -1,6 +1,12 @@
+[![Build Status](https://travis-ci.org/Shkrt/oauth_token_verifier.svg?branch=master)](https://travis-ci.org/Shkrt/oauth_token_verifier)
+
 # OauthTokenVerifier
 
 This library helps to verify oauth2 access tokens that have been obtained from third party, i.e. mobile application.
+
+Example of oauth2 flow using this library is shown below:
+
+![alt text](https://github.com/Shkrt/oauth_token_verifier/raw/master/oauth2_flow.png "Flow example")
 
 ## Installation
 
