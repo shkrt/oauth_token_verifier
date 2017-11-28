@@ -22,5 +22,27 @@ RSpec.describe TokenVerifier do
       expect(verifier.provider).to be_instance_of(OauthTokenVerifier::Providers::Facebook)
       expect(verifier.token).to eq('token')
     end
+
+    it 'it delegates verify_token to provider class' do
+      verifier = described_class.new(:facebook, 'token')
+      fb = verifier.provider
+      allow(fb).to receive(:verify_token).and_return(:something)
+      expect(fb).to receive(:verify_token).with(verifier)
+      verifier.verify_token
+    end
+  end
+
+  context 'when specified provider missing from configuration' do
+    before(:each) do
+      OauthTokenVerifier.configure do |config|
+        config.enabled_providers = []
+      end
+    end
+
+    it 'raises configuration error during initialization' do
+      expect { described_class.new(:facebook, 'token') }.to raise_error(
+        OauthTokenVerifier::TokenVerifier::NoProviderFoundError
+      )
+    end
   end
 end
