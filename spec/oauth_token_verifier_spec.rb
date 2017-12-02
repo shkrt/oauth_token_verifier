@@ -5,6 +5,12 @@ RSpec.describe OauthTokenVerifier do
   it 'has a version number' do
     expect(OauthTokenVerifier::VERSION).not_to be nil
   end
+
+  describe '#configure' do
+    it 'yields to block' do
+      expect(described_class.configure { |config| 2 + 2 }).to eq 4
+    end
+  end
 end
 
 RSpec.describe TokenVerifier do
