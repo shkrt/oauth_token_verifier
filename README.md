@@ -12,15 +12,19 @@ Example of oauth2 flow using this library is shown below:
 
 install manually:
 
-`gem install oauth_token_verifier`
+```shell
+gem install oauth_token_verifier
+```
 
 or using Gemfile:
 
-`gem 'oauth_token_verifier'`
+```ruby
+gem 'oauth_token_verifier'
+```
 
 ## Configuration
 
-```
+```ruby
 OauthTokenVerifier.configure do |c|
   ...
 end
@@ -28,25 +32,25 @@ end
 
 You should configure enabled providers first, only three providers are supported by now
 
-```
+```ruby
 c.enabled_providers = [:google, :facebook, :vk]
 ```
 
 then goes separate configuration for each provider
 
-```
+```ruby
 # provider name to be returned
 c.facebook.name = 'facebook'
 ```
 
-```
+```ruby
 # id field - this used to uniquely identify user
 c.facebook.id_field = 'id'
 ```
 
 mapping of other returned fields to arbitrary field names. By default, no fields parameter passed when querying a provider. Feel free to add any field supported by chosen provider
 
-```
+```ruby
 c.facebook.fields_mapping = { first_name: :name }
 
 c.vk.name = 'vkontakte'
@@ -61,8 +65,12 @@ c.google.fields_mapping = { given_name: :first_name, picture: :avatar }
 
 ## Usage
 
-`include OauthTokenVerifier`
+```ruby
+include OauthTokenVerifier
+```
 
-`verify(:google, token: 'qweqweqwLKJNlknlknlk343=')`
+```ruby
+verify(:google, token: 'qweqweqwLKJNlknlknlk343=')
+```
 
 The response will either return a struct, containing profile info fields, or raise an exception with error explanation
