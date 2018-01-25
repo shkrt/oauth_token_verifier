@@ -63,6 +63,6 @@ c.google.fields_mapping = { given_name: :first_name, picture: :avatar }
 
 `include OauthTokenVerifier`
 
-`verify(:google, 'qweqweqwLKJNlknlknlk343=')`
+`verify(:google, token: 'qweqweqwLKJNlknlknlk343=')`
 
 The response will either return a struct, containing profile info fields, or raise an exception with error explanation
