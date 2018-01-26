@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/oauth_token_verifier.svg)](https://badge.fury.io/rb/oauth_token_verifier)
+
 [![Build Status](https://travis-ci.org/Shkrt/oauth_token_verifier.svg?branch=master)](https://travis-ci.org/Shkrt/oauth_token_verifier)
 
 # OauthTokenVerifier
