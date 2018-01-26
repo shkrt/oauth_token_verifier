@@ -7,12 +7,11 @@
 ## Motivation
 
 This library's only responsibility is to verify oauth2 access tokens that have been obtained from third party.
+No access tokens needed.
 
 Real-world use case:
 
 - You have a mobile application, with users authenticating via oauth2 providers.
-
-- The only thing that this mobile app receive from oauth2 provider is an access token
 
 With the help of this library you can use oauth2 access tokens to validate the token, verify the user identity and map users' attributes to the custom attributes.
 
@@ -30,7 +29,7 @@ The depicted workflow consists of the following steps:
 
 4. Backend application receives the token and makes a request to the OAuth provider
 
-5. Backend application receives info from OAuth provider and does something with it - authernticates the user, creates the user, updates user's data.
+5. Backend application receives info from OAuth provider and does something with it - authenticates the user, creates the user, updates user's data.
 
 ## Installation
 
@@ -40,9 +39,11 @@ install manually:
 gem install oauth_token_verifier
 ```
 
-or using Gemfile:
+or using Bundler:
 
 ```ruby
+# Gemfile
+
 gem 'oauth_token_verifier'
 ```
 
@@ -54,37 +55,57 @@ OauthTokenVerifier.configure do |c|
 end
 ```
 
+##### Enabled providers
+
 You should configure enabled providers first, only three providers are supported by now
 
 ```ruby
 c.enabled_providers = [:google, :facebook, :vk]
 ```
 
-then goes separate configuration for each provider
+If you try to use the provider that is not in `enabled_providers` list, the `NoProviderFoundError` will be raised.
+
+Then goes separate configuration for each provider
+
+##### name
+
+Name, that will be returned in the resulting Struct. Basically, it's just a custom alias for provider. Each provider
+will be given the default name if no alias provided.
 
 ```ruby
 # provider name to be returned
-c.facebook.name = 'facebook'
+c.facebook.name = 'fb'
 ```
+
+##### id_field
+
+Id field from OAuth provider response, that will be used as unique id. The default values are `email` for `Google`,
+`id` for `Facebook` and `uid` for `Vk`.
 
 ```ruby
 # id field - this used to uniquely identify user
 c.facebook.id_field = 'id'
 ```
+##### fields_mapping
 
-mapping of other returned fields to arbitrary field names. By default, no fields parameter passed when querying a provider. Feel free to add any field supported by chosen provider
+Mapping of other returned fields to arbitrary field names.
+By default, no fields parameter passed when querying a provider. With this setting configured, the query parameter will
+contain the additional parameters to query more information from OAuth provider.
+Feel free to add any field supported by the chosen provider, but keeo in mind that not all the fields are available to
+query without api tokens.
 
 ```ruby
 c.facebook.fields_mapping = { first_name: :name }
 
 c.vk.name = 'vkontakte'
 c.vk.id_field = 'uid'
+
+# here we map vk's sex field to gender, and photo_id field to avatar
 c.vk.fields_mapping = { sex: :gender, photo_id: :avatar }
 
 c.google.name = 'google'
 c.google.id_field = 'email'
 c.google.fields_mapping = { given_name: :first_name, picture: :avatar }
-
 ```
 
 ## Usage
@@ -94,7 +115,21 @@ include OauthTokenVerifier
 ```
 
 ```ruby
-verify(:google, token: 'qweqweqwLKJNlknlknlk343=')
+verify(:google, token: 'some_very_long_unreadable_sequence_here')
+
 ```
 
-The response will either return a struct, containing profile info fields, or raise an exception with error explanation
+The response will either return a struct, containing profile info fields, or raise an exception with error explanation:
+
+```ruby
+=> #<struct OauthTokenVerifier::Providers::Vk::BaseFields
+ uid=00010101010,
+ provider="vk",
+ info=#<struct  first_name="John", last_name="Smith">>
+```
+
+Example of error response:
+
+ ```ruby
+OauthTokenVerifier::TokenVerifier::TokenCheckError: Invalid Value
+```
