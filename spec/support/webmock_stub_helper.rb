@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 def stub_api_requests
   stub_vk_request
   stub_vk_request_with_incorrect_token

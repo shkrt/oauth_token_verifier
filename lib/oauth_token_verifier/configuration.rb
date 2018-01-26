@@ -7,18 +7,18 @@ module OauthTokenVerifier
       @enabled_providers = []
 
       @google = ProviderSettings.new({
-        first_name: :given_name,
-        last_name: :family_name
-      }, 'google', 'email')
+                                       first_name: :given_name,
+                                       last_name: :family_name
+                                     }, 'google', 'email')
 
       @vk = ProviderSettings.new({
-        first_name: :first_name,
-        last_name: :last_name
-      }, 'vk', 'uid')
+                                   first_name: :first_name,
+                                   last_name: :last_name
+                                 }, 'vk', 'uid')
 
       @facebook = ProviderSettings.new({
-        first_name: :name,
-      }, 'facebook', 'id')
+                                         first_name: :name
+                                       }, 'facebook', 'id')
     end
   end
 end

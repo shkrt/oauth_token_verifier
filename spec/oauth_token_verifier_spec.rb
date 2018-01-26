@@ -8,14 +8,13 @@ RSpec.describe OauthTokenVerifier do
 
   describe '#configure' do
     it 'yields to block' do
-      expect(described_class.configure { |config| 2 + 2 }).to eq 4
+      expect(described_class.configure { |_config| 2 + 2 }).to eq 4
     end
   end
 end
 
 RSpec.describe TokenVerifier do
   context 'when correctly configured' do
-
     before(:each) do
       OauthTokenVerifier.configure do |config|
         config.enabled_providers = [:facebook]
