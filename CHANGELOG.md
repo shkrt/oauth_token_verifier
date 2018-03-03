@@ -1,6 +1,9 @@
 Changelog
 ============
 
+#### 0.1.5
+- added version parameter reflecting recent vk.com API changes
+
 #### 0.1.4
 - minor fixes, travis integration added
 
