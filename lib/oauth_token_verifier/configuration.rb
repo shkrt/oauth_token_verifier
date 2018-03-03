@@ -14,7 +14,7 @@ module OauthTokenVerifier
       @vk = ProviderSettings.new({
                                    first_name: :first_name,
                                    last_name: :last_name
-                                 }, 'vk', 'uid', '5.0')
+                                 }, 'vk', 'id', '5.0')
 
       @facebook = ProviderSettings.new({
                                          first_name: :name

@@ -80,7 +80,7 @@ c.facebook.name = 'fb'
 ##### id_field
 
 Id field from OAuth provider response, that will be used as unique id. The default values are `email` for `Google`,
-`id` for `Facebook` and `uid` for `Vk`.
+`id` for `Facebook` and `Vk`.
 
 ```ruby
 # id field - this used to uniquely identify user
@@ -98,7 +98,7 @@ query without api tokens.
 c.facebook.fields_mapping = { first_name: :name }
 
 c.vk.name = 'vkontakte'
-c.vk.id_field = 'uid'
+c.vk.id_field = 'id'
 
 # here we map vk's sex field to gender, and photo_id field to avatar
 c.vk.fields_mapping = { sex: :gender, photo_id: :avatar }
@@ -118,6 +118,12 @@ Version `5.0` is configured in gem by default, but it's possible to override it:
 c.vk.version = '5.73'
 ```
 
+For VK API v.3.0 please use `uid` parameter:
+
+```ruby
+c.vk.version = '3.0'
+c.vk.id_field = 'uid'
+```
 
 ## Usage
 
@@ -134,7 +140,7 @@ The response will either return a struct, containing profile info fields, or rai
 
 ```ruby
 => #<struct OauthTokenVerifier::Providers::Vk::BaseFields
- uid=00010101010,
+ id=00010101010,
  provider="vk",
  info=#<struct  first_name="John", last_name="Smith">>
 ```
