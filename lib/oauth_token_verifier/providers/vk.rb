@@ -8,6 +8,7 @@ module OauthTokenVerifier
       def initialize
         @data_fields = Struct.new(*config.fields_mapping.values)
         @request_fields = config.fields_mapping.keys.join(',')
+        @version = config.version
       end
 
       def verify_token(context)
@@ -23,7 +24,7 @@ module OauthTokenVerifier
       end
 
       def build_uri(token)
-        params = { access_token: token, fields: @request_fields }
+        params = { access_token: token, fields: @request_fields, v: @version }
         URI::HTTPS.build(host: 'api.vk.com',
                          path: '/method/users.get',
                          query: URI.encode_www_form(params))
