@@ -110,8 +110,8 @@ c.google.fields_mapping = { given_name: :first_name, picture: :avatar }
 
 ##### version
 
-Version is a required parameter for VK provider. Default VK API version 3.0 is depreceted so it is
-neccessary to pass `v` parameter explicitly for any API call to VK. Recommended API version is 5.0+. 
+Version is a required parameter for VK provider. Default VK API version 3.0 is deprecated so it is
+neccessary to pass `v` parameter explicitly for any API call to VK. Recommended API version is 5.0+.
 Version `5.0` is configured in gem by default, but it's possible to override it:
 
 ```ruby
