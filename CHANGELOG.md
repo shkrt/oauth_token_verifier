@@ -1,6 +1,9 @@
 Changelog
 ============
 
+#### Master
+- use `id` default uid parameter for vk provider
+
 #### 0.1.5
 - added version parameter reflecting recent vk.com API changes
 

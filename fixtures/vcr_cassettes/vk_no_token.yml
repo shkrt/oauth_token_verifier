@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.vk.com/method/users.get?access_token=incorrect_token&v=5.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.vk.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Apache
+      Date:
+      - Tue, 06 Mar 2018 04:06:28 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '160'
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - PHP/3.14776
+      Set-Cookie:
+      - remixlang=0; expires=Thu, 07 Mar 2019 23:32:10 GMT; path=/; domain=.vk.com
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-store
+    body:
+      encoding: ASCII-8BIT
+      string: '{"error":{"error_code":5,"error_msg":"User authorization failed: invalid
+        access_token (4).","request_params":[{"key":"oauth","value":"1"},{"key":"method","value":"users.get"},{"key":"v","value":"5.0"}]}}'
+    http_version: 
+  recorded_at: Tue, 06 Mar 2018 04:06:29 GMT
+recorded_with: VCR 4.0.0

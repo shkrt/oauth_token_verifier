@@ -18,7 +18,7 @@ end
 def stub_fb_request_with_incorrect_token
   WebMock.stub_request(:get, /https:\/\/graph\.facebook\.com\/me\?access_token=incorrect_token*./)
          .with(headers: { 'Accept' => '*/*', 'Host' => 'graph.facebook.com', 'User-Agent' => 'Ruby' })
-         .to_return(status: 200, body: '{"error": {"message": "The access token could not be decrypted",
+         .to_return(status: 200, body: '{"error": {"message": "Invalid OAuth Access Token.",
                                          "type": "OAuthException", "code": 190, "fbtrace_id": "BbgV+RTTIGz"}}')
 end
 
@@ -26,7 +26,7 @@ def stub_vk_request
   WebMock.stub_request(:get, /https:\/\/api\.vk\.com\/method\/users\.get\?access_token=correct_token*./)
          .with(headers: { 'Accept' => '*/*', 'Host' => 'api.vk.com', 'User-Agent' => 'Ruby' })
          .to_return(status: 200,
-                    body: '{"response":[{"uid":"010101","first_name":"Name","last_name":"Surname"}]}',
+                    body: '{"response":[{"id":"010101","first_name":"Name","last_name":"Surname"}]}',
                     headers: {})
 end
 
